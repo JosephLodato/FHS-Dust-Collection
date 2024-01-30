@@ -39,7 +39,7 @@ bool chopOpen = false;
 
 
 void setup() {
-  Serial.begin(9600); //sets bit rate (9600) and starts communitcation with the serial monitor
+  Serial.begin(9600); //sets bit rate (9600) and starts communication with the serial monitor
   cncServo.attach(cncPin);
   sanderServo.attach(sanderPin); // attaches the defined servos to their defined pins
   drillServo.attach(drillPin);
@@ -52,7 +52,7 @@ void loop() {
   char keyPressed = keypad.getKey(); // Checks for a key press
 
   if (keyPressed) {
-    Serial.println(keyPressed); // log key press to attached computer (for debuging)
+    Serial.println(keyPressed); // log key press to the attached computer (for debugging)
 
 
     if (keyPressed == '1') {
@@ -61,12 +61,13 @@ void loop() {
         floorServo.write(openAngle); // opens this gate
         floorOpen = true; // to keep track of what gates are open
       } else {
-        floorServo.write(closedAngle); // Close this gate if it was alreaedy open at the time of keypress
+        floorServo.write(closedAngle); // Close this gate if it was already open at the time of the key press
         floorOpen = false;
       }
     }
 
-    if (keyPressed == '2') {  //Same as all others, see the first if statemnent for explanation
+    // Could use a switch statement, at the time I didn't know what that was though  
+    if (keyPressed == '2') {  
       if (chopOpen == false) {
         closeAllGates();
         chopServo.write(openAngle);
@@ -77,7 +78,7 @@ void loop() {
       }
     }
 
-    if (keyPressed == '3') {  //Same as all others, see the first if statemnent for explanation
+    if (keyPressed == '3') {  
       if (drillOpen == false) {
         closeAllGates();
         drillServo.write(openAngle);
@@ -88,7 +89,7 @@ void loop() {
       }
     }
 
-    if (keyPressed == '4') {  //Same as all others, see the first if statemnent for explanation
+    if (keyPressed == '4') {  
       if (sanderOpen == false) {
         closeAllGates();
         sanderServo.write(openAngle);
@@ -99,7 +100,7 @@ void loop() {
       }
     }
 
-    if (keyPressed == '5') {  //Same as all others, see the first if statemnent for explanation
+    if (keyPressed == '5') { 
       if (cncOpen == false) {
         closeAllGates();
         cncServo.write(openAngle);
@@ -112,9 +113,7 @@ void loop() {
     }
 
     //Special cases:
-    
-    //actually runs when the '*' symbol is pressed.
-    if (keyPressed == '#') { // These keypads give the the '#' symobol when you press '*', so I adjusted it with code
+    if (keyPressed == '#') {
       cncServo.write(openAngle);
       delay(1500);
       sanderServo.write(openAngle);
@@ -132,8 +131,7 @@ void loop() {
       chopOpen = true;
     }
 
-     //actually runs when the '#' symbol is pressed.
-    if (keyPressed == '*') { // These keypads give the the '#' symobol when you press '*', so I adjusted it with code
+    if (keyPressed == '*') {
       closeAllGates();
     }
   }
